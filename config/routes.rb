@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :foods
+  resources :pets
   # RESTful routes
   resources :examples, except: %i[new edit]
   resources :users, only: %i[index show update]
