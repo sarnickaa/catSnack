@@ -1,5 +1,6 @@
-class PetsController < ApplicationController
+class PetsController < OpenReadController
   before_action :set_pet, only: [:show, :update, :destroy]
+  # before_action :authenticate_user!
 
   # GET /pets
   def index
@@ -15,7 +16,7 @@ class PetsController < ApplicationController
 
   # POST /pets
   def create
-    @pet = Pet.new(pet_params)
+    @pet = current_user.pets.build(pet_params)
 
     if @pet.save
       render json: @pet, status: :created, location: @pet
