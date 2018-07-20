@@ -1,10 +1,13 @@
-class PetsController < OpenReadController
+class PetsController < ProtectedController
   before_action :set_pet, only: [:show, :update, :destroy]
+  # before a method is even run - a pet variable is set up using the
+  # set_pet method for the following methods: show, update, destroy
   # before_action :authenticate_user!
 
   # GET /pets
   def index
-    @pets = Pet.all
+    @pets = current_user.pets
+    # Pet.all
 
     render json: @pets
   end
@@ -47,6 +50,7 @@ class PetsController < OpenReadController
 
     # Only allow a trusted parameter "white list" through.
     def pet_params
-      params.require(:pet).permit(:name, :age, :user_id)
+      params.require(:pet).permit(:name, :age, :user_id).reject { |_, v| v.blank? }
+      # SO answer
     end
 end
