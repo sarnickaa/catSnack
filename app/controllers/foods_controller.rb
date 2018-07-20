@@ -1,9 +1,21 @@
-class FoodsController < ApplicationController
-  before_action :set_food, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class FoodsController < ProtectedController
+  before_action :set_food, only: %i[show update destroy]
 
   # GET /foods
   def index
-    @foods = Food.all
+    # require 'pry'
+    # binding.pry
+    # @foods = current_user.pets.all.map(&:foods)
+    # @pets = current_user.pets.all
+    @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
+
+
+    # @foods = current_user.pets.foods
+
+    # current_user.pets.all.foods.all
+    # Food.where(current_user.pets(id))
 
     render json: @foods
   end
@@ -16,6 +28,7 @@ class FoodsController < ApplicationController
   # POST /foods
   def create
     @food = Food.new(food_params)
+    # @food = current_user.pets.find(params[:pet_id]).foods.build(food_params)
 
     if @food.save
       render json: @food, status: :created, location: @food
@@ -39,13 +52,14 @@ class FoodsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_food
-      @food = Food.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def food_params
-      params.require(:food).permit(:brand_name, :main_ingredient, :secondary_ingredient, :pet_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_food
+    @food = Food.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def food_params
+    params.require(:food).permit(:brand_name, :main_ingredient, :secondary_ingredient, :pet_id, :score).reject { |_, v| v.blank? }
+  end
 end
