@@ -30,6 +30,8 @@ class PetsController < ProtectedController
 
   # PATCH/PUT /pets/1
   def update
+    # @pet = current_user.pets.find(pet_params[:id])
+    # @pet.update(pet_params).where(current_user.pets(pet_params[:id]))
     if @pet.update(pet_params)
       render json: @pet
     else
@@ -39,13 +41,15 @@ class PetsController < ProtectedController
 
   # DELETE /pets/1
   def destroy
+    # @pet = current_user.pets.find(pet_params[:id])
     @pet.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pet
-      @pet = Pet.find(params[:id])
+      # @pet = Pet.find(params[:id])
+    @pet ||= current_user.pets.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -52,10 +52,13 @@ class FoodsController < ProtectedController
   end
 
   private
-
   # Use callbacks to share common setup or constraints between actions.
   def set_food
-    @food = Food.find(params[:id])
+    # @food = Food.find(params[:id])
+    @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
+    @food = @foods.find(params[:id])
+    # @food ||= current_user.pets.foods.find(params[:id])
+    # @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
   end
 
   # Only allow a trusted parameter "white list" through.
