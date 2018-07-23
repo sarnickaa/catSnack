@@ -1,349 +1,56 @@
 Rails[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
-# rails-api-template
+# deployed site front-end:
 
+### repository front-end:
+https://github.com/sarnickaa/catSnack-client
 
-## Prerequisites
+# deployed site back-end:
 
--   [rails-api-examples-walkthrough](https://git.generalassemb.ly/ga-wdi-boston/rails-api-examples-walkthrough)
+### repository back-end:
+https://github.com/sarnickaa/catSnack
 
-## Dependencies
+## Description:
 
-Install with `bundle install`.
+catSnack is a pet-food preference tracker for pet owners.
 
--   [`rails-api`](https://github.com/rails-api/rails-api)
--   [`rails`](https://github.com/rails/rails)
--   [`active_model_serializers`](https://github.com/rails-api/active_model_serializers)
--   [`ruby`](https://www.ruby-lang.org/en/)
--   [`postgres`](http://www.postgresql.org)
+Keeping tabs on the type of food a pet prefers is difficult especially if pet preferences change over time. Pet food purchases are usually made in bulk quantities meaning that accidentally buying the wrong type of food for a picky pet means wasted time, money and an unhappy critter.
 
-## Installation
+Healthy pets should be given a variety of foods to prevent nutritional deficits (or overloads) and to maintain interest and quality of life. Keeping an easily accessible/updatable list of a pets food preferences will mean owners can be sure they're purchasing food their pet will
 
-### Download Template:
-1.  [Download](../../archive/master.zip) this template.
-1.  Unzip and rename the template directory (`unzip ~/Downloads/rails-api-template-master.zip`)
-1.  Move into the new project and `git init`.
+ a. actually like and eat (no wasted money/food or time)
 
-### Customize Template:
-1.  Empty [`README.md`](README.md) and fill with your own content.
-1.  Rename your app module in `config/application.rb` (change
-    `RailsApiTemplate`).
-1.  Rename your project database in `config/database.yml` (change
-    `'rails-api-template'`).
+ b. allow owners to monitor their pets dietary profile and make adjustments as they deem necessary (i.e. does Abby eat too much tuna-based food? does she hate lamb? does she like tuna+duck but won't touch tuna+shrimp?)
 
-### Setup Environment:
-1.  Install dependencies with `bundle install`.
-1.  `git add` and `git commit` your changes.
-1.  Create a `.env` for sensitive settings (`touch .env`).
-1.  Generate new `development` and `test` secrets (`bundle exec rails secret`).
-1.  Store them in `.env` with keys `SECRET_KEY_BASE_<DEVELOPMENT|TEST>`
-    respectively.
-1.  In order to make requests to your deployed API, you will need to set
-    `SECRET_KEY_BASE` in the environment of the production API (for example, using `heroku config:set` or the Heroku dashboard).
-1.  In order to make requests from your deployed client application, you will
-    need to set `CLIENT_ORIGIN` in the environment of the production API (for example, `heroku config:set CLIENT_ORIGIN=https://<github-username>.github.io`).
-    See more about deploying to heroku [rails-heroku-setup-guide](https://git.generalassemb.ly/ga-wdi-boston/rails-heroku-setup-guide)
+This is an app for pet owners of one or more pets. The 1st iteration will be for cats only but it can be expanded to multiple types of pets. (rename: petSnack)
 
-### Setup your database:
-    - bin/rails db:drop (if it already exists)
-    - bin/rails db:create
-    - bin/rails db:migrate
-    - bin/rails db:seed
-    - bin/rails db:examples
-
-  Note: Remember to follow the same commands when setting up your deployed database!
-
-### Run your server!
-1. Run the API server with `bin/rails server` or `bundle exec rails server`.
-
-## Structure
-
-This template follows the standard project structure in Rails.
-
-`curl` command scripts are stored in [`scripts`](scripts) with names that
-correspond to API actions.
-
-User authentication is built-in.
-
-## Tasks
-
-Developers should run these often!
-
--   `bin/rails routes` lists the endpoints available in your API.
--   `bin/rails test` runs automated tests.
--   `bin/rails console` opens a REPL that pre-loads the API.
--   `bin/rails db` opens your database client and loads the correct database.
--   `bin/rails server` starts the API.
--   `scripts/*.sh` run various `curl` commands to test the API. See below.
-
-<!-- TODO -   `rake nag` checks your code style. -->
-<!-- TODO -   `rake lint` checks your code for syntax errors. -->
-
-## API
-
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
-
-Scripts are included in [`scripts`](scripts) to test built-in actions. Add your
-own scripts to test your custom API. As an alternative, you can write automated
-tests in RSpec to test your API.
-
-### Authentication
-
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password`     | `users#changepw`  |
-| DELETE | `/sign-out`        | `users#signout`   |
-
-#### POST /sign-up
-
-Request:
-
-```sh
-curl http://localhost:4741/sign-up \
-  --include \
-  --request POST \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "'"${EMAIL}"'",
-      "password": "'"${PASSWORD}"'",
-      "password_confirmation": "'"${PASSWORD}"'"
-    }
-  }'
-```
-
-```sh
-EMAIL=ava@bob.com PASSWORD=hannah scripts/sign-up.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 201 Created
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "ava@bob.com"
-  }
-}
-```
-
-#### POST /sign-in
-
-Request:
-
-```sh
-curl http://localhost:4741/sign-in \
-  --include \
-  --request POST \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "'"${EMAIL}"'",
-      "password": "'"${PASSWORD}"'"
-    }
-  }'
-```
-
-```sh
-EMAIL=ava@bob.com PASSWORD=hannah scripts/sign-in.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "ava@bob.com",
-    "token": "BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f"
-  }
-}
-```
-
-#### PATCH /change-password
-
-Request:
-
-```sh
-curl --include --request PATCH "http://localhost:4741/change-password" \
-  --header "Authorization: Token token=$TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "passwords": {
-      "old": "'"${OLDPW}"'",
-      "new": "'"${NEWPW}"'"
-    }
-  }'
-```
-
-```sh
-OLDPW='hannah' NEWPW='elle' TOKEN='BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f' sh scripts/change-password.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-#### DELETE /sign-out
-
-Request:
-
-```sh
-curl http://localhost:4741/sign-out \
-  --include \
-  --request DELETE \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-TOKEN='BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f' sh scripts/sign-out.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-### Users
-
-| Verb | URI Pattern | Controller#Action |
-|------|-------------|-------------------|
-| GET  | `/users`    | `users#index`     |
-| GET  | `/users/1`  | `users#show`      |
-| PATCH| `/users/1`  | `users#update`    |
-
-#### GET /users
-
-Request:
-
-```sh
-curl http://localhost:4741/users \
-  --include \
-  --request GET \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/users.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "users": [
-    {
-      "id": 2,
-      "email": "bob@ava.com"
-    },
-    {
-      "id": 1,
-      "email": "ava@bob.com"
-    }
-  ]
-}
-```
-
-#### GET /users/:id
-
-Request:
-
-```sh
-curl --include --request GET http://localhost:4741/users/$ID \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-ID=2 TOKEN=BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f scripts/user.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 2,
-    "email": "bob@ava.com"
-  }
-}
-```
-
-#### PATCH /users/:id
-
-Request:
-
-```sh
-curl "http://localhost:4741/users/${ID}" \
-  --include \
-  --request PATCH \
-  --header "Authorization: Token token=${TOKEN}" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "user": {
-      "email": "'"${EMAIL}"'"
-    }
-  }'
-```
-
-```sh
-ID=1 TOKEN="BAhJIiU1NGNlYjRmMjBhM2NkZTZiNzk1MGNiYmZiYWMyY2U4MwY6BkVG--ddb1e16af0e05921aa56d771e4a2f816f2a1d46e"
-EMAIL=mike@m
-sh scripts/users/user-update.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{"user":{"id":1,"email":"mike@m"}}
-```
-
-### Reset Database without dropping
-
-This is not a task developers should run often, but it is sometimes necessary.
-
-**locally**
-
-```sh
-bin/rails db:migrate VERSION=0
-bin/rails db:migrate db:seed db:examples
-```
-
-**heroku**
-
-```sh
-heroku run rails db:migrate VERSION=0
-heroku run rails db:migrate db:seed db:examples
-```
-
-## Additional Resources
-- [rails-heroku-setup-guide](https://git.generalassemb.ly/ga-wdi-boston/rails-heroku-setup-guide)
-- http://guides.rubyonrails.org/api_app.html
-- https://blog.codeship.com/building-a-json-api-with-rails-5/
-
-## [License](LICENSE)
-
-1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
-1.  All software code is licensed under GNU GPLv3. For commercial use or
-    alternative licensing, please contact legal@ga.co.
+## ERD's:
+![img_4510](https://media.git.generalassemb.ly/user/11649/files/d5803762-8e5b-11e8-8de6-619fe50b3f02)
+
+## Technologies used:
+
+  API:    Ruby on Rails
+  Client: JavaScript
+          CSS
+          HTML5
+
+## Future Iterations:
+
+I would like to look into the Amazon API to see if there's a way I can pull customer reviews for the brands of food users log.
+
+I would also like to spend some time trying to make my UI interface mobile-responsive. The main point of this app is that it is a handy on-the-go means by which pet owners can log food for their pets and that means a mobile interface will be necessary.
+
+I would also like to explore the possibility of a search function to help users access relevant data quickly and in a very specific manner.
+
+### Planning:
+
+My planning process mirrored the suggested schedule closely. The issue queue was instrumental in helping me work through roadblocks as was talking through issues with colleagues.
+
+My process relied on building the API first, testing functionality with curl scripts and then building a UI around that.
+
+My main concerns with this project were:
+1. linking the backend to a usable/attractive UI.
+2. being able to effectively target and filter data for specific users through CRUD actions.
+3. building data relationships that made sense for a user.
+
+In terms of building the API, the trickiest portions for me were customizing and refining my CRUD methods to target the specific data. This mainly stemmed from a lack of deep familiarity with rails-specific syntax.
