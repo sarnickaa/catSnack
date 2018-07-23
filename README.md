@@ -1,11 +1,13 @@
 Rails[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
 # deployed site front-end:
+https://sarnickaa.github.io/catSnack-client/
 
 ### repository front-end:
 https://github.com/sarnickaa/catSnack-client
 
 # deployed site back-end:
+https://cat-snack.herokuapp.com/
 
 ### repository back-end:
 https://github.com/sarnickaa/catSnack
@@ -23,6 +25,24 @@ Healthy pets should be given a variety of foods to prevent nutritional deficits 
  b. allow owners to monitor their pets dietary profile and make adjustments as they deem necessary (i.e. does Abby eat too much tuna-based food? does she hate lamb? does she like tuna+duck but won't touch tuna+shrimp?)
 
 This is an app for pet owners of one or more pets. The 1st iteration will be for cats only but it can be expanded to multiple types of pets. (rename: petSnack)
+
+## How it works:
+
+The user can:
+- register with email & password
+- sign in with email & password
+- create a pet or pets
+- view owned pet/pets
+- view specific pet by ID
+- delete pet by ID
+- Update pet by ID
+- create a food item and assign it to a specific pet by ID
+- view all food items created
+- view a specific food item by ID
+- delete food by ID
+- Update food by ID
+- change password
+- logout
 
 ## ERD's:
 ![img_4510](https://media.git.generalassemb.ly/user/11649/files/d5803762-8e5b-11e8-8de6-619fe50b3f02)
