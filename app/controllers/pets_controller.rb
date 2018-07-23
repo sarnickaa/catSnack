@@ -2,12 +2,18 @@ class PetsController < ProtectedController
   before_action :set_pet, only: [:show, :update, :destroy]
   # before a method is even run - a pet variable is set up using the
   # set_pet method for the following methods: show, update, destroy
-  # before_action :authenticate_user!
+  # set_pet:
+  # @pet ||= current_user.pets.find(params[:id])
+  # the id passed by the user for the pet MUST exist within the current_user collection of pets
+  # ||= is ruby code pattern
+  # ||=
+  # a = a || b
+  # a will initialie to b IF a is nil/false/undefined OTHERWISE a = a
+
 
   # GET /pets
   def index
     @pets = current_user.pets
-    # Pet.all
 
     render json: @pets
   end
@@ -30,8 +36,7 @@ class PetsController < ProtectedController
 
   # PATCH/PUT /pets/1
   def update
-    # @pet = current_user.pets.find(pet_params[:id])
-    # @pet.update(pet_params).where(current_user.pets(pet_params[:id]))
+
     if @pet.update(pet_params)
       render json: @pet
     else
@@ -41,20 +46,21 @@ class PetsController < ProtectedController
 
   # DELETE /pets/1
   def destroy
-    # @pet = current_user.pets.find(pet_params[:id])
     @pet.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pet
-      # @pet = Pet.find(params[:id])
+
     @pet ||= current_user.pets.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def pet_params
       params.require(:pet).permit(:name, :age, :user_id).reject { |_, v| v.blank? }
-      # SO answer
+      # https://stackoverflow.com/questions/41472226/strange-behavior-with-underscore-in-ruby
+      # ruby treats the _ as the value of the last calcualted expression i.e. the last key iterated over
+      # https://stackoverflow.com/questions/24939971/how-to-remove-empty-parameters-from-params-hash/24940076
     end
 end

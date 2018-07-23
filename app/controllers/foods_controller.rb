@@ -5,18 +5,9 @@ class FoodsController < ProtectedController
 
   # GET /foods
   def index
-    # require 'pry'
-    # binding.pry
-    # @foods = current_user.pets.all.map(&:foods)
-    # @pets = current_user.pets.all
     @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
-
-
-    # @foods = current_user.pets.foods
-
-    # current_user.pets.all.foods.all
-    # Food.where(current_user.pets(id))
-
+    # find all foods where the pet_id matches the current_users pet's id's
+    # this finds only the foods belonging to a users pets
     render json: @foods
   end
 
@@ -27,8 +18,10 @@ class FoodsController < ProtectedController
 
   # POST /foods
   def create
-    @food = Food.new(food_params)
-    # @food = current_user.pets.find(params[:pet_id]).foods.build(food_params)
+    @pet = current_user.pets.find(food_params[:pet_id])
+    @food = @pet.foods.build(food_params)
+    # find users pets first using pet_id from food_params
+    # build food resource based on the pets found
 
     if @food.save
       render json: @food, status: :created, location: @food
@@ -54,15 +47,14 @@ class FoodsController < ProtectedController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_food
-    # @food = Food.find(params[:id])
     @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
     @food = @foods.find(params[:id])
-    # @food ||= current_user.pets.foods.find(params[:id])
-    # @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
+
   end
 
   # Only allow a trusted parameter "white list" through.
   def food_params
     params.require(:food).permit(:brand_name, :main_ingredient, :secondary_ingredient, :pet_id, :score).reject { |_, v| v.blank? }
+    # https://stackoverflow.com/questions/24939971/how-to-remove-empty-parameters-from-params-hash/24940076
   end
 end
