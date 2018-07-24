@@ -1,5 +1,6 @@
 class PetsController < ProtectedController
   before_action :set_pet, only: [:show, :update, :destroy]
+  # before_action :set_shelter, only: [:getShelters]
   # before a method is even run - a pet variable is set up using the
   # set_pet method for the following methods: show, update, destroy
   # set_pet:
@@ -17,6 +18,11 @@ class PetsController < ProtectedController
 
     render json: @pets
   end
+
+  # def getShelters
+  #   @shelters = ??
+  #   render json: @shelters
+  # end
 
   # GET /pets/1
   def show
