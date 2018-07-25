@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get '/petfinder/:location' => 'petfinder#index'
+  get '/petfinder/:location' => 'petfinder#index' #points to the index method on petfinder controller
 
   resources :foods, except: %i[new edit]
   resources :pets, except: %i[new edit]
