@@ -29,3 +29,7 @@ end
     end
   end
 end
+
+# code from tutorial:
+# https://code.likeagirl.io/dont-be-scared-of-api-s-a-beginner-s-guide-to-api-s-using-meetup-and-rails-part-1-7fac68635c49
+# https://code.likeagirl.io/dont-be-scared-of-api-s-4dd9e84271d4
