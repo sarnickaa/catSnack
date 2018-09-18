@@ -48,6 +48,7 @@ class FoodsController < ProtectedController
   # Use callbacks to share common setup or constraints between actions.
   def set_food
     @foods = Food.all.where(pet_id: current_user.pets.map(&:id))
+    # https://stackoverflow.com/questions/31607034/how-to-pass-key-as-an-argument-to-map-instead-of-a-block-with-ruby
     @food = @foods.find(params[:id])
 
   end
